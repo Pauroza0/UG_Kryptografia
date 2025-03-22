@@ -76,7 +76,7 @@ def write_file(filename, data):
 def kryptoanaliza_cezar_jawny(helptext, crypt):
     for key in range(1, 26):
         if cezar_encrypt(helptext, key) == crypt[:len(helptext)]:
-            write_file("foundkey.txt", str(key))
+            write_file("key-found.txt", str(key))
             return key
     return None
 
@@ -93,7 +93,7 @@ def kryptoanaliza_afiniczny_jawny(helptext, crypt):
     for a in [x for x in range(1, 26) if odwrotnosc_modulo(x) is not None]:
         for b in range(26):
             if affiniczny_encrypt(helptext, a, b) == crypt[:len(helptext)]:
-                write_file("foundkey.txt", f"{a} {b}")
+                write_file("key-found.txt", f"{a} {b}")
                 return a, b
     return None
 
@@ -137,17 +137,17 @@ if __name__ == '__main__':
                 key = check_key_cezar()
                 text = usun_polskie_znaki(read_file("plain.txt"))
                 encrypted = cezar_encrypt(text, key)
-                write_file("crypt.txt", encrypted)
+                write_file("crypto.txt", encrypted)
 
             elif operacja == '-d':
                 key = check_key_cezar()
-                text = read_file("crypt.txt")
+                text = read_file("crypto.txt")
                 decrypted = cezar_decrypt(text, key)
                 write_file("decrypt.txt", decrypted)
 
             elif operacja == '-j':
                 helptext = usun_polskie_znaki(read_file("extra.txt"))
-                crypt = read_file("crypt.txt")
+                crypt = read_file("crypto.txt")
                 key_found = kryptoanaliza_cezar_jawny(helptext, crypt)
                 if key_found is None:
                     print("Nie znaleziono klucza")
@@ -156,7 +156,7 @@ if __name__ == '__main__':
                 write_file("decrypt.txt", decrypted)
 
             elif operacja == '-k':
-                crypt = read_file("crypt.txt")
+                crypt = read_file("crypto.txt")
                 wynik = kryptoanaliza_cezar_niejawny(crypt)
                 write_file("decrypt.txt", wynik)
             else:
@@ -169,15 +169,15 @@ if __name__ == '__main__':
                 a, b = check_key_afiniczny()
                 text = usun_polskie_znaki(read_file("plain.txt"))
                 encrypted = affiniczny_encrypt(text, a, b)
-                write_file("crypt.txt", encrypted)
+                write_file("crypto.txt", encrypted)
 
             elif operacja == '-d':
                 a, b = check_key_afiniczny()
-                text = read_file("crypt.txt")
+                text = read_file("crypto.txt")
                 decrypted = affiniczny_decrypt(text, a, b)
                 write_file("decrypt.txt", decrypted)
             elif operacja == '-j':
-                crypt = read_file("crypt.txt")
+                crypt = read_file("crypto.txt")
                 helptext = read_file("extra.txt")
                 key = kryptoanaliza_afiniczny_jawny(helptext, crypt)
                 if key:

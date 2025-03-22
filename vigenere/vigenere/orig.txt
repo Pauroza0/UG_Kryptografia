@@ -1,0 +1,116 @@
+1 Introduction
+Cryptography is a key building block in modern communication protocols and a necessary ingredient to many digital services. Advances in cryptography in the last 40–50 years have brought us public key cryptography [1], digital signatures (e.g. [2]), secure and efficient encryption algorithms (e.g. AES [3]), homomorphic encryption [4] and secure multi-party computation [5], to name a few examples. These are being utilized by billions of people daily in the form of different digital services such as messaging, online banking and shopping, web browsing, cloud computing etc.
+
+Modern cryptography is based on provable security. This means that for a given cryptographic primitive or protocol there should be clearly defined security goals (and corresponding threat models) and a proof (usually by reduction) that shows how the proposed system achieves these goals and under what assumptions. Although there is some criticism towards this approach, e.g. [6,7], it is widely accepted as one of the best guarantees of (theoretical) security for cryptosystems. Of course, the actual implementations can and do suffer from various vulnerabilities and flaws that can be exploited, e.g. [8,9]. However, without a security proof, there would be even less evidence on the security of a cryptosystem, even if the implementation may fail in ways that are not envisioned in the original threat model, e.g. side channels through timing and power consumption.
+
+Despite these advances and the benefits that have been gained, there is an area of cryptography that is not covered in great detail and which lacks comprehensive solutions. The current paradigm of provable security tends to leave the human users of systems out of the picture and to build the security models around the ubiquitous client–server model of communications. This model is of course perfectly adequate in machine to machine communications, but it is not enough for describing the human factor, which the user brings to the system.
+
+In addition to the above paradigm, modern cryptography is almost completely outside of human capabilities. In order to use encryption, authentication and other cryptographic functionalities, users need to utilize a computer to carry out the cryptographic tasks. There are only a few notable exceptions, that have been studied in more detail, such as visual cryptography [10]. In visual cryptography a human user can decrypt the machine-encrypted message by merely looking at the correctly positioned shares of the message. More recently there has been proposed a theory on human computable functions that could be utilized in cryptography [11]. These ideas have been utilized in the context of password authentication [12,13], but not more generally in cryptography.
+
+Bringing about a change in the current and in many ways very good paradigm raises some questions. What would this new approach achieve? Why would we need such human-friendly systems, when we have very good mechanisms that can be run on computers and computers are becoming more and more ubiquitous? The answer lies partly already in the second question and in the changes that are coming about in our society. We are now giving a lot of power to the machines and algorithms run by very opaque systems. Artificial intelligence (AI) and machine learning have become parts of our everyday life and different algorithms affect us in many ways. This development is not without problems and many potentially adverse effects of this development have been discussed (see [14] for a recent survey on the topic).
+
+One problem with this development is that we have no mechanisms to use human senses and capabilities to evaluate the correctness of these computations and algorithms. This needs to change and there are valid and good cryptographic methods to build trust, transparency and privacy to these systems. The old adage of “trust, but verify” should apply to decisions made by AI and algorithms. However, we need cryptography that is accessible to human users and that can build trust and verification capabilities for human–machine interaction. Some ideas towards this kind of functionality, especially in the augmented and virtual reality domains, have been presented in [15].
+
+To further illustrate the motivation behind this paper we drew Fig. 1. It depicts the difference between what our basic client–server model should ideally and hopefully be, what it actually is, and how allowing human users to naturally interact with cryptography could change the situation.
+
+The aim of this paper is to review the existing research on the use of human senses in cryptography and cryptographic protocols. The results of this review will point out the possible gaps and thus also the potential future research direction in this field (see Table 1 on Section 2.9 for details). These open problems will be discussed in the later sections of this article.
+
+Cornerstone Cryptographic Concepts
+Cryptography is secret writing, a type of secure communication understood by the sender and intended recipient only. While it may be known that the data is being transmitted, the content of that data should remain unknown to third parties. Data in motion (moving on a network) and data at rest (stored on a device, such as a disk) may be encrypted for security.
+
+Key Terms
+Cryptology is the science of secure communications. Cryptography creates messages with hidden meaning; cryptanalysis is the science of breaking those encrypted messages to recover their meaning. Many use the term cryptography in place of cryptology; however, it is important to remember that cryptology encompasses both cryptography and cryptanalysis.
+
+A cipher is a cryptographic algorithm. A plaintext is an unencrypted message. Encryption converts a plaintext to a ciphertext. Decryption turns a ciphertext back into a plaintext.
+
+Confidentiality, Integrity, Authentication, and Nonrepudiation
+Cryptography can provide confidentiality (secrets remain secret) and integrity (data is not altered without authorization). It is important to note that it does not directly provide availability. Cryptography can also provide authentication, which proves an identity claim.
+
+Additionally, cryptography can provide nonrepudiation, which is an assurance that a specific user performed a specific transaction that did not change.
+
+Confusion, Diffusion, Substitution, and Permutation
+Diffusion means the order of the plaintext should be “diffused” or dispersed in the ciphertext. Confusion means that the relationship between the plaintext and ciphertext should be as confused or random as possible.
+
+Cryptographic substitution replaces one character for another; this provides the confusion. Permutation, also called transposition, provides diffusion by rearranging the characters of the plaintext, anagram-style. For example, “ATTACKATDAWN” can be rearranged to “CAAKDTANTATW.”
+
+Did You Know?
+Strong encryption destroys patterns. If a single bit of plaintext changes, the odds of every bit of resulting ciphertext changing should be 50/50. Any signs of nonrandomness can be clues for a cryptanalyst, hinting at the underlying order of the original plaintext or key.
+
+Cryptographic Strength
+Good encryption is strong. For key-based encryption, it should be very difficult (ideally, impossible) to convert a ciphertext back to a plaintext without the key. The work factor describes how long it will take to break a cryptosystem (decrypt a ciphertext without the key).
+
+Secrecy of the cryptographic algorithm does not provide strength; in fact, secret algorithms are often proven quite weak. Strong crypto relies on math, not secrecy, to provide strength. Ciphers that have stood the test of time are public algorithms, such as the Triple Data Encryption Standard (TDES) and the Advanced Encryption Standard (AES).
+
+Monoalphabetic and Polyalphabetic Ciphers
+A monoalphabetic cipher uses one alphabet, in which a specific letter substitutes for another. A polyalphabetic cipher uses multiple alphabets; for example, E substitutes for X one round, then S the next round.
+
+Monoalphabetic ciphers are susceptible to frequency analysis. Polyalphabetic ciphers attempt to address this issue via the use of multiple alphabets.
+
+Exclusive OR
+Exclusive OR (XOR) is the “secret sauce” behind modern encryption. Combining a key with a plaintext via XOR creates a ciphertext. XORing the same key to the ciphertext restores the original plaintext. XOR math is fast and simple, so simple that it can be implemented with phone relay switches.
+
+Data at Rest and Data in Motion
+Cryptography protects data at rest and data in motion, or data in transit. Full disk encryption (also called whole disk encryption) of a magnetic disk drive using software such as BitLocker or PGP Whole Disk Encryption is an example of encrypting data at rest. An SSL or IPsec VPN is an example of encrypting data in motion.
+
+Protocol Governance
+Cryptographic protocol governance describes the process of selecting the right method (ie, cipher) and implementation for the right job, typically on an organization-wide scale. For example, as we will learn later this chapter, a digital signature provides authentication and integrity, but not confidentiality. Symmetric ciphers are primarily used for confidentiality, and AES is preferable over DES due to its strength and performance.
+Cornerstone Cryptographic Concepts
+Fundamental cryptographic concepts are embodied by all strong encryption, and must be understood before learning about specific implementations.
+
+Key Terms
+Cryptology is the science of secure communications. Cryptography creates messages whose meaning is hidden; cryptanalysis is the science of breaking encrypted messages (recovering their meaning). Many use the term cryptography in place of cryptology: it is important to remember that cryptology encompasses both cryptography and cryptanalysis.
+
+A cipher is a cryptographic algorithm. A plaintext is an unencrypted message. Encryption converts the plaintext to a ciphertext. Decryption turns a ciphertext back into a plaintext.
+
+Confidentiality, Integrity, Authentication, and Non-Repudiation
+Cryptography can provide confidentiality (secrets remain secret) and integrity (data is not altered in an unauthorized manner): it is important to note that it does not directly provide availability. Cryptography can also provide authentication (proving an identity claim).
+
+Additionally, cryptography can provide nonrepudiation, which is an assurance that a specific user performed a specific transaction and that the transaction did not change. The two must be tied together. Proving that you signed a contract to buy a car is not useful if the car dealer can increase the cost after you signed the contract. Nonrepudiation means the individual who performed a transaction, such as authenticating to a system and viewing personally identifiable information (PII), cannot repudiate (or deny) having done so afterward.
+
+Confusion, Diffusion, Substitution, and Permutation
+Diffusion means the order of the plaintext should be “diffused” (or dispersed) in the ciphertext. Confusion means that the relationship between the plaintext and ciphertext should be as confused (or random) as possible. These terms were first defined by Claude Shannon, the father of information security, in his paper Communication Theory of Secrecy Systems, in 1949.1
+
+Cryptographic substitution replaces one character for another; this provides confusion. Permutation (also called transposition) provides diffusion by rearranging the characters of the plaintext, anagram-style. “ATTACKATDAWN” can be rearranged to “CAAKDTANTATW,” for example. Substitution and permutation are often combined. While these techniques were used historically (the Caesar Cipher is a substitution cipher), they are still used in combination in modern ciphers such as the Advanced Encryption Standard (AES).
+
+Strong encryption destroys patterns. If a single bit of plaintext changes, the odds of every bit of resulting ciphertext changing should be 50/50. Any signs of nonrandomness may be used as clues to a cryptanalyst, hinting at the underlying order of the original plaintext or key.
+
+Note
+
+The dates and names (such as Claude Shannon) associated with cryptographic breakthroughs are generally not testable, unless the inventor's name appears in the name of the device or cipher. This information is given to flesh out the cryptographic concepts (which are very testable).
+
+Cryptographic Strength
+Good encryption is strong: for key-based encryption, it should be very difficult (and ideally impossible) to convert a ciphertext back to a plaintext without the key. The work factor describes how long it will take to break a cryptosystem (decrypt a ciphertext without the key).
+
+Secrecy of the cryptographic algorithm does not provide strength: in fact secret algorithms are often proven quite weak. Strong crypto relies on math, not secrecy, to provide strength. Ciphers that have stood the test of time are public algorithms, such as the Triple Data Encryption Standard (TDES) and the Advanced Encryption Standard (AES).
+
+Monoalphabetic and Polyalphabetic Ciphers
+A monoalphabetic cipher uses one alphabet: a specific letter (like “E”) is substituted for another (like “X”). A polyalphabetic cipher uses multiple alphabets: “E” may be substituted for “X” one round, and then “S” the next round.
+
+Monoalphabetic ciphers are susceptible to frequency analysis. Figure 4.1 shows the frequency of English letters in text. A monoalphabetic cipher that substituted “X” for “E,” “C” for “T,” etc., would be quickly broken using frequency analysis. Polyalphabetic ciphers attempt to address this issue via the use of multiple alphabets.
+Modular Math
+Modular math lies behind much of cryptography: simply put, modular math shows you what remains (the remainder) after division. It is sometimes called “clock math” because we use it to tell time: assuming a 12-hour clock, 6 hours past 9:00 PM is 3:00 AM. In other words, 9 + 6 is 15, divided by 12 leaves a remainder of 3.
+
+As we will see later, methods like the running-key cipher use modular math. There are 26 letters in the English alphabet; adding the letter “Y” (the 25th letter) to “C” (the third letter) equals “B” (the 2nd letter). In other words, 25 + 3 equals 28. 28 divided by 26 leaves a remainder of 2. It is like moving in a circle (such as a clock face): once you hit the letter “Z,” you wrap around back to “A.”
+
+Exclusive Or (XOR)
+Exclusive Or (XOR) is the “secret sauce” behind modern encryption. Combining a key with a plaintext via XOR creates a ciphertext. XOR-ing to same key to the ciphertext restores the original plaintext. XOR math is fast and simple, so simple that it can be implemented with phone relay switches (as we will see with the Vernam Cipher).
+
+Two bits are true (or 1) if one or the other (exclusively, not both) is 1. If both bits are 0 or both bits are 1, they XOR to 0. XOR uses a truth table, shown in Table 4.1. In the truth table, a 0 is “false” and a 1 is true. This dictates how to combine the bits of a key and plaintext.
+
+Table 4.1. XOR Truth Table
+
+If you were to encrypt the plaintext “ATTACK AT DAWN” with a key of “UNICORN,” you would XOR the bits of each letter together, letter by letter. We will encrypt and then decrypt the first letter to demonstrate XOR math. “A” is binary 01000001 and “U” is binary 01010101. We then XOR each bit of the plaintext to the key, using the truth table in Table 4.1. This results in a Ciphertext of 00010100, shown in Table 4.2.
+
+Table 4.2. 01000001 XORed to 01010101
+
+Now let us decrypt the ciphertext 00010100 with a key of “U” (binary 01010101). We XOR each bit of the key (01010101) with the ciphertext (00010100), again using the truth table in Table 4.1. We recover our original plaintext of 01000001 (ASCII “A”), as shown in Table 4.3.
+
+Table 4.3. 00010100 XORed to 01010101
+
+Types of Cryptography
+There are three primary types of modern encryption: symmetric, asymmetric, and hashing. Symmetric encryption uses one key: the same key encrypts and decrypts. Asymmetric cryptography uses two keys: if you encrypt with one key, you may decrypt with the other. Hashing is a one-way cryptographic transformation using an algorithm (and no key).
+
+
+
+
+Two bits are true (or 1) if one or the other (exclusively, not both) is 1. In other words: if two bits are different, the answer is 1 (true). If two bits are the same, the answer is 0 (false). XOR uses a truth table, shown in Table 3.2. This dictates how to combine the bits of a key and plaintext.
